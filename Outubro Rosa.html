@@ -1,0 +1,652 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset=utf8>
+  <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <style>
+    :root {
+      color-scheme: light;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px)
+    }
+
+    html {
+      scroll-padding-top: env(safe-area-inset-top, 0px)
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font: 14px -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #faf9f5;
+      color: #141413
+    }
+
+    img {
+      max-width: 100%
+    }
+
+    [hidden]:not([hidden=until-found i]) {
+      display: none !important
+    }
+  </style>
+</head>
+
+<body>
+  <title>Outubro Rosa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap">
+  <style>
+    /* Layout: cabeçalho assimétrico à esquerda com o mês em tipografia grande; seções em faixas largas;
+   QR code em cartão branco (sempre claro, para ler bem) ao lado do convite à ação. */
+    :root {
+      --bg: #fff7f9;
+      --surface: #ffffff;
+      --fg: #3a1228;
+      --muted: #7b5468;
+      --line: #f1d3de;
+      --rosa: #d6336c;
+      --rosa-forte: #a3154f;
+      --rosa-claro: #fde3ec;
+      --ameixa: #4a0f31;
+      --on-ameixa: #fff1f6;
+      --f-display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+      --f-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #1d0a15;
+        --surface: #2a1020;
+        --fg: #fbe9f0;
+        --muted: #c79bb0;
+        --line: #4a2339;
+        --rosa: #ff6b9d;
+        --rosa-forte: #ff8fb5;
+        --rosa-claro: #3d1530;
+        --ameixa: #5a1440;
+        --on-ameixa: #fff1f6;
+        color-scheme: dark;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #1d0a15;
+      --surface: #2a1020;
+      --fg: #fbe9f0;
+      --muted: #c79bb0;
+      --line: #4a2339;
+      --rosa: #ff6b9d;
+      --rosa-forte: #ff8fb5;
+      --rosa-claro: #3d1530;
+      --ameixa: #5a1440;
+      --on-ameixa: #fff1f6;
+      color-scheme: dark;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--f-body);
+      font-size: 17px;
+      line-height: 1.6;
+      padding-inline: 16px;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: var(--f-display);
+      line-height: 1.05;
+      text-wrap: balance;
+      margin: 0;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    a {
+      color: var(--rosa-forte);
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid var(--rosa);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    .wrap {
+      max-width: 1040px;
+      margin-inline: auto;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--rosa-forte);
+    }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 32px;
+      align-items: center;
+      padding-block: 56px 48px;
+    }
+
+    .hero h1 {
+      font-size: clamp(3.4rem, 12vw, 7.5rem);
+      font-weight: 800;
+      letter-spacing: -.035em;
+      color: var(--rosa);
+    }
+
+    .hero h1 span {
+      display: block;
+      color: var(--fg);
+    }
+
+    .hero .lead {
+      margin-top: 24px;
+      font-size: 1.2rem;
+      max-width: 34em;
+    }
+
+    .ribbon {
+      width: min(100%, 300px);
+      justify-self: center;
+      color: var(--rosa);
+    }
+
+    .cal {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      margin-top: 28px;
+      max-width: 320px;
+    }
+
+    .cal b {
+      font-size: 11px;
+      letter-spacing: .08em;
+      color: var(--muted);
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .cal i {
+      font-style: normal;
+      font-size: 13px;
+      text-align: center;
+      padding: 5px 0;
+      border-radius: 50%;
+      background: var(--rosa-claro);
+      color: var(--rosa-forte);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .cal i.off {
+      background: none;
+    }
+
+    .cal-note {
+      margin-top: 10px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* Faixas */
+    section {
+      padding-block: 48px;
+      border-top: 1px solid var(--line);
+    }
+
+    .head {
+      display: grid;
+      gap: 12px;
+      max-width: 40em;
+      margin-bottom: 32px;
+    }
+
+    .head h2 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -.02em;
+    }
+
+    .head p {
+      color: var(--muted);
+    }
+
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .fact {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 24px;
+      min-width: 0;
+    }
+
+    .fact strong {
+      display: block;
+      font-family: var(--f-display);
+      font-size: 2.6rem;
+      line-height: 1;
+      color: var(--rosa);
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .fact p {
+      margin-top: 10px;
+      font-size: 15px;
+    }
+
+    .signs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0 40px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .signs li {
+      padding-block: 18px;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .signs h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .signs p {
+      color: var(--muted);
+      font-size: 15.5px;
+    }
+
+    .ages {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .age {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 24px;
+      display: grid;
+      gap: 8px;
+      align-content: start;
+      min-width: 0;
+    }
+
+    .age.main {
+      background: var(--ameixa);
+      color: var(--on-ameixa);
+      border-color: var(--ameixa);
+    }
+
+    .age .range {
+      font-family: var(--f-display);
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .age.main .range {
+      color: #ffb3cd;
+    }
+
+    .age h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .age p {
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    .age.main p {
+      color: var(--on-ameixa);
+      opacity: .9;
+    }
+
+    .habits {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .habits li {
+      background: var(--rosa-claro);
+      color: var(--fg);
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+
+    /* QR */
+    .qr {
+      background: var(--ameixa);
+      color: var(--on-ameixa);
+      border-radius: 22px;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1.3fr auto;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .qr h2 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -.02em;
+    }
+
+    .qr p {
+      margin-top: 14px;
+      max-width: 32em;
+      opacity: .92;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 24px;
+      background: #fff;
+      color: #7a1346;
+      font-weight: 600;
+      padding: 13px 22px;
+      border-radius: 10px;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background: #ffd9e6;
+    }
+
+    .qrbox {
+      background: #fff;
+      padding: 18px;
+      border-radius: 16px;
+      display: grid;
+      justify-items: center;
+      gap: 10px;
+      color: #4a0f31;
+    }
+
+    .qrbox #qrcode {
+      width: 220px;
+      height: 220px;
+      display: grid;
+      place-items: center;
+    }
+
+    .qrbox canvas,
+    .qrbox img {
+      max-width: 100%;
+      height: auto !important;
+    }
+
+    .qrbox small {
+      font-size: 13px;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .aviso {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 46em;
+    }
+
+    footer {
+      padding-block: 32px 56px;
+      border-top: 1px solid var(--line);
+      display: grid;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 760px) {
+      body {
+        font-size: 16px;
+      }
+
+      .hero,
+      .qr {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-block: 32px;
+      }
+
+      .ribbon {
+        width: 150px;
+        justify-self: start;
+        order: -1;
+      }
+
+      .facts,
+      .ages,
+      .signs {
+        grid-template-columns: 1fr;
+      }
+
+      .qr {
+        padding: 28px 20px;
+      }
+
+      .qrbox {
+        justify-self: start;
+      }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .ribbon {
+        animation: sway 6s ease-in-out infinite;
+        transform-origin: 50% 20%;
+      }
+
+      @keyframes sway {
+        50% {
+          transform: rotate(3deg);
+        }
+      }
+    }
+  </style>
+
+  <div class="wrap">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Campanha de conscientização · 1º a 31 de outubro</p>
+        <h1><span>Outubro</span>Rosa</h1>
+        <p class="lead">Um mês dedicado ao controle do câncer de mama. Conhecer o próprio corpo e fazer os exames na
+          idade certa aumenta as chances de descobrir a doença cedo, quando o tratamento tem mais resultado.</p>
+        <div class="cal" id="cal" aria-label="Calendário de outubro de 2026"></div>
+        <p class="cal-note">Os 31 dias de outubro de 2026. Cada um é uma chance de lembrar alguém de se cuidar.</p>
+      </div>
+      <svg class="ribbon" viewBox="0 0 200 260" role="img" aria-label="Laço rosa, símbolo da campanha">
+        <path
+          d="M100 118 C 70 70, 40 40, 40 78 C 40 112, 80 124, 100 118 C 120 124, 160 112, 160 78 C 160 40, 130 70, 100 118 Z"
+          fill="none" stroke="currentColor" stroke-width="22" stroke-linejoin="round" />
+        <path d="M100 118 L 52 232 M100 118 L 148 232" stroke="currentColor" stroke-width="22" stroke-linecap="round"
+          fill="none" />
+      </svg>
+    </header>
+
+    <section>
+      <div class="head">
+        <p class="eyebrow">Por que importa</p>
+        <h2>O câncer de mama é o mais frequente entre as mulheres no Brasil</h2>
+        <p>Depois dos tumores de pele não melanoma, é o tipo que mais aparece na população feminina brasileira.
+          Detectado cedo, tem boas chances de cura.</p>
+      </div>
+      <div class="facts">
+        <div class="fact"><strong>73.610</strong>
+          <p>casos novos por ano estimados pelo INCA para o triênio 2023–2025.</p>
+        </div>
+        <div class="fact"><strong>50 a 69</strong>
+          <p>anos: faixa em que o Ministério da Saúde recomenda a mamografia de rastreamento.</p>
+        </div>
+        <div class="fact"><strong>2 anos</strong>
+          <p>é o intervalo recomendado entre uma mamografia e a seguinte nessa faixa etária.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="head">
+        <p class="eyebrow">Sinais de alerta</p>
+        <h2>Conheça o seu corpo e procure um serviço de saúde se notar mudanças</h2>
+        <p>Esses sinais não significam câncer, mas precisam ser avaliados por um profissional.</p>
+      </div>
+      <ul class="signs">
+        <li>
+          <h3>Nódulo na mama</h3>
+          <p>Caroço endurecido e fixo, geralmente sem dor.</p>
+        </li>
+        <li>
+          <h3>Mudança na pele</h3>
+          <p>Vermelhidão, retração ou aspecto de casca de laranja.</p>
+        </li>
+        <li>
+          <h3>Alteração no mamilo</h3>
+          <p>Mamilo que se volta para dentro ou ferida que não cicatriza.</p>
+        </li>
+        <li>
+          <h3>Saída de líquido</h3>
+          <p>Secreção espontânea pelo mamilo, principalmente se for sanguinolenta.</p>
+        </li>
+        <li>
+          <h3>Caroços na axila</h3>
+          <p>Nódulos palpáveis nas axilas ou no pescoço.</p>
+        </li>
+        <li>
+          <h3>Diferença de tamanho</h3>
+          <p>Mudança no formato ou no volume de uma das mamas.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <div class="head">
+        <p class="eyebrow">Rastreamento</p>
+        <h2>Quando fazer a mamografia</h2>
+        <p>No SUS, a mamografia de rastreamento é gratuita. A frequência ideal depende da idade e do risco de cada
+          pessoa.</p>
+      </div>
+      <div class="ages">
+        <div class="age"><span class="range">40–49</span>
+          <h3>Converse com o médico</h3>
+          <p>A decisão de fazer o exame é individual. Avalie benefícios e riscos junto com um profissional.</p>
+        </div>
+        <div class="age main"><span class="range">50–69</span>
+          <h3>Mamografia a cada 2 anos</h3>
+          <p>É a faixa em que o rastreamento organizado traz mais benefício, segundo o Ministério da Saúde.</p>
+        </div>
+        <div class="age"><span class="range">70+</span>
+          <h3>Siga a orientação médica</h3>
+          <p>O acompanhamento depende da saúde geral e do histórico de cada mulher.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="head">
+        <p class="eyebrow">Prevenção</p>
+        <h2>Hábitos que reduzem o risco</h2>
+        <p>Não existe forma de evitar o câncer de mama por completo, mas alguns cuidados diminuem a chance de
+          desenvolver a doença.</p>
+      </div>
+      <ul class="habits">
+        <li>Manter o peso saudável</li>
+        <li>Praticar atividade física</li>
+        <li>Evitar o consumo de álcool</li>
+        <li>Não fumar</li>
+        <li>Amamentar, quando possível</li>
+        <li>Comer mais alimentos naturais</li>
+      </ul>
+    </section>
+
+    <section>
+      <div class="qr">
+        <div>
+          <p class="eyebrow" style="color:#ffb3cd">Fonte oficial</p>
+          <h2>Aponte a câmera e leia o guia do INCA</h2>
+          <p>O Instituto Nacional de Câncer explica sintomas, diagnóstico, tratamento e fatores de risco do câncer de
+            mama. Escaneie o código ou use o botão.</p>
+          <a class="btn" href="https://www.gov.br/inca/pt-br/assuntos/cancer/tipos/mama" target="_blank"
+            rel="noopener">Abrir página do INCA</a>
+        </div>
+        <div class="qrbox">
+          <div id="qrcode" aria-label="QR code para a página do INCA sobre câncer de mama" role="img"></div>
+          <small>gov.br/inca · Câncer de mama</small>
+        </div>
+      </div>
+    </section>
+
+    <p class="aviso">Este site traz informações gerais de conscientização e não substitui consulta médica. Diante de
+      qualquer alteração nas mamas, procure uma unidade básica de saúde.</p>
+    <footer>
+      <span>Dados e recomendações: Instituto Nacional de Câncer (INCA) e Ministério da Saúde.</span>
+      <a href="https://www.gov.br/inca/pt-br/assuntos/cancer/tipos/mama" target="_blank"
+        rel="noopener">https://www.gov.br/inca/pt-br/assuntos/cancer/tipos/mama</a>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    (function () {
+      // Calendário de outubro de 2026: 1º de outubro cai numa quinta-feira.
+      var cal = document.getElementById('cal'), h = '';
+      ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'].forEach(function (d) {h += '<b>' + d + '</b>';});
+      for (var i = 0; i < 4; i++) h += '<i class="off"></i>';
+      for (var d = 1; d <= 31; d++) h += '<i>' + d + '</i>';
+      cal.innerHTML = h;
+
+      var url = 'https://www.gov.br/inca/pt-br/assuntos/cancer/tipos/mama';
+      try {
+        new QRCode(document.getElementById('qrcode'), {
+          text: url, width: 220, height: 220,
+          colorDark: '#7a1346', colorLight: '#ffffff',
+          correctLevel: QRCode.CorrectLevel.M
+        });
+      } catch (e) {
+        document.getElementById('qrcode').innerHTML = '<a href="' + url + '" target="_blank" rel="noopener">Abrir página do INCA</a>';
+      }
+    })();
+  </script>
+
+</body>
+
+</html>
